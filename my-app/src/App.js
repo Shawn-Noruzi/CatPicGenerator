@@ -6,7 +6,7 @@ import "./App.css";
 
 function App() {
   return (
-    <Container disableGutters="false" maxWidth="false">
+    <Container disableGutters={true} maxWidth={false}>
       <NavBar />
       <CatPictures />
     </Container>

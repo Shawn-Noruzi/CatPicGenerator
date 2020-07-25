@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
+import Button from "@material-ui/core/Button";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -16,6 +17,18 @@ const useStyles = makeStyles((theme) => ({
     width: 500,
     height: 450,
   },
+  buttonPrimary: {
+    width: "100%",
+    marginTop: 75,
+  },
+  loading: {
+    width: "100%",
+    marginTop: 50,
+    marginBottom: 50,
+  },
+  catPictures: {
+    marginTop: 75,
+  },
 }));
 
 export const CatPictures = () => {
@@ -28,7 +41,7 @@ export const CatPictures = () => {
   };
 
   useEffect(() => {
-    fetch(`https://api.thecatapi.com/v1/images/search`, {
+    fetch(`https://api.thecatapi.com/v1/images/search?page=${page}&limit=12`, {
       method: "GET",
       headers: new Headers({
         "x-api-key": "97493ec6-5863-4b69-b5d5-2ff36f422d34",
@@ -36,20 +49,39 @@ export const CatPictures = () => {
     })
       .then((res) => res.json())
       .then((response) => {
-        setCatPictures(response.items);
-        console.log(catPictures);
+        console.log(response);
+        setCatPictures(response);
         setIsLoading(false);
       })
       .catch((error) => console.log(error));
   }, [page]);
-  
+
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
-      <Typography variant="h6" component="h2">
-        Cat Pictures
-      </Typography>
+      {isLoading ? (
+        <p className={classes.loading}>Wait I'm Loading Cats for you UwU </p>
+      ) : (
+        <div>
+          <Typography
+            className={classes.catPictures}
+            variant="h6"
+            component="h2"
+          >
+            Cat Pictures
+          </Typography>
+          <Button
+            className={classes.buttonPrimary}
+            variant="contained"
+            color="primary"
+            onClick={loadMoreCats}
+          >
+            Load More Cats
+          </Button>
+        </div>
+      )}
+
       {/* <div className={classes.root}>
         <GridList cellHeight={160} className={classes.gridList} cols={3}>
           {tileData.map((tile) => (

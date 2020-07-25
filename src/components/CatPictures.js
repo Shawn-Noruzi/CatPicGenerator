@@ -19,8 +19,7 @@ const useStyles = makeStyles((theme) => ({
     width: 500,
   },
   buttonPrimary: {
-    width: "100%",
-
+    width: "100%"
   },
   loading: {
     width: "100%",
